@@ -11,3 +11,42 @@ html {
 h1 {
   font-size: 52px;
 }
+
+.navbar {
+  box-shadow: 0px 1px 5px rgba(204, 204, 204, 0.192);
+}
+
+/* Header styles */
+
+h2 {
+  color: white;
+}
+
+.find-header {
+  display: grid;
+  justify-items: center;
+}
+
+.header-button {
+  font-size: 18px;
+  border: 1px solid white;
+  width: 125px;
+  border-radius: 5px;
+  color: white;
+  background-color: #282c34;
+  padding: 5px 10px;
+  margin: 20px 0 !important;
+  cursor: pointer;
+}
+
+.header-button:hover {
+  transform: translateX(2%) translateY(-2%);
+  background-color: #a0b1d2;
+  box-shadow: -2px 2px 5px #ccc;
+}
+
+.header-button:active {
+  transform: translateX(0%) translateY(0%);
+  background-color: #282c34;
+  box-shadow: none;
+}
