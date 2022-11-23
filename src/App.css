@@ -10,6 +10,21 @@ html {
 
 h1 {
   font-size: 52px;
+  z-index: 1;
+}
+
+.nav-title {
+  position: relative;
+  z-index: 1;
+}
+
+.nav-underline {
+  position: absolute;
+  width: 216px;
+  height: 10px;
+  background-color: hotpink;
+  transform: translateX(20%) translateY(310%);
+  z-index: 0;
 }
 
 /* Header styles */
