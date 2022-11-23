@@ -11,20 +11,15 @@ html {
 h1 {
   font-size: 52px;
   z-index: 1;
+  color: white;
+  background: url("data:image/svg+xml;charset=utf8,%3Csvg version='1.1' xmlns='http://www.w3.org/2000/svg' x='0px' y='0px' width='1px' height='1px' viewBox='0 0 1 1' preserveAspectRatio='none'%3E%3Crect x='0' y='0' width='1' height='1' fill='hotpink' /%3E%3C/svg%3E") no-repeat 100% 100%;
+  background-size: 70% 30%;
+  background-position: 50% 90%;
+  transition: background-size 200ms ease-in-out;
 }
 
-.nav-title {
-  position: relative;
-  z-index: 1;
-}
-
-.nav-underline {
-  position: absolute;
-  width: 216px;
-  height: 10px;
-  background-color: hotpink;
-  transform: translateX(20%) translateY(310%);
-  z-index: 0;
+h1:hover {
+  background-size: 40% 30%;
 }
 
 /* Header styles */
@@ -60,6 +55,24 @@ h2 {
   transform: translateX(0%) translateY(0%);
   background-color: #282c34;
   box-shadow: none;
+}
+
+.movie {
+  background: url("data:image/svg+xml;charset=utf8,%3Csvg version='1.1' xmlns='http://www.w3.org/2000/svg' x='0px' y='0px' width='1px' height='1px' viewBox='0 0 1 1' preserveAspectRatio='none'%3E%3Crect x='0' y='0' width='1' height='1' fill='orange' /%3E%3C/svg%3E") no-repeat 100% 100%;
+  background-size: 100% 30%;
+  background-position: 50% 90%;
+  transition: background-size 200ms ease-in-out;
+}
+
+.show {
+  background: url("data:image/svg+xml;charset=utf8,%3Csvg version='1.1' xmlns='http://www.w3.org/2000/svg' x='0px' y='0px' width='1px' height='1px' viewBox='0 0 1 1' preserveAspectRatio='none'%3E%3Crect x='0' y='0' width='1' height='1' fill='orangered' /%3E%3C/svg%3E") no-repeat 100% 100%;
+  background-size: 100% 30%;
+  background-position: 50% 90%;
+  transition: background-size 200ms ease-in-out;
+}
+
+.movie:hover, .show:hover {
+  background-size: 60% 30%;
 }
 
 /* Form styles */

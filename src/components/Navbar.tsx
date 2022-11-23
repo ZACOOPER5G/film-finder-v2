@@ -2,12 +2,14 @@ import { Container, Navbar as NavBar } from "react-bootstrap";
 
 export const Navbar = () => {
   return (
-    <NavBar bg="dark" variant="dark">
-    <Container>
-      <NavBar.Brand href="#home">
-        <h1>🍿 Film Finder 🍿</h1>
-      </NavBar.Brand>
-    </Container>
-  </NavBar>
-  )
+    <NavBar className="navbar" bg="dark" variant="dark">
+      <Container>
+        <NavBar.Brand href="#home">
+          	<div >
+				<h1 className="nav-title" >🍿 Film Finder. 🍿</h1>
+			</div>
+        </NavBar.Brand>
+      </Container>
+    </NavBar>
+  );
 };
