@@ -10,7 +10,6 @@ export const FilmForm = (props: any) => {
 	const [rating, setRating] = useState(0);
 	const [afterYear, setAfterYear] = useState('');
 	const [beforeYear, setBeforeYear] = useState('');
-	const [randomFilm, setRandomFilm] = useState({});
 
 	// api variables
     const baseUrl = 'https://api.themoviedb.org/3/';
@@ -70,7 +69,7 @@ export const FilmForm = (props: any) => {
 			// get random film and set it as chosen film
 			let ranNum = Math.floor(Math.random() * 20).toString();
 			let ranFilm = json.results[ranNum];
-		setRandomFilm(ranFilm);
+		props.setChosenFilm(ranFilm);
         } catch (err) {
             console.log(err);
         };
