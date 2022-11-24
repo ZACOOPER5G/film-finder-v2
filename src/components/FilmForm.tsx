@@ -4,13 +4,12 @@ import env from "ts-react-dotenv";
 
 export const FilmForm = () => {
 	const [genres, setGenres] = useState([]);
-
+	
 	// selected options
 	const [genre, setGenre] = useState('');
 	const [rating, setRating] = useState(0);
 	const [afterYear, setAfterYear] = useState('');
 	const [beforeYear, setBeforeYear] = useState('');
-	const [actor, setActor] = useState('');
 
     const baseUrl = 'https://api.themoviedb.org/3/';
     const key = env.REACT_APP_KEY;
@@ -25,7 +24,7 @@ export const FilmForm = () => {
 			let response = await fetch(urlToFetch);
 			let json = await response.json();
 			setGenres(json.genres);
-			let currGenre = json.genres[0]
+			let currGenre = json.genres[0];
 			setGenre(currGenre.id);
 		} catch (err) {
 			console.log(err);
@@ -39,20 +38,19 @@ export const FilmForm = () => {
 	// function to fetch film after submitting form
     const handleFilmFetch = async () => {
         try {
-            let response = await fetch(`${baseUrl}discover/movie?api_key=${key}&language=en-US&with_genres=${genre}&vote_average.gte=${rating}`);
+            let response = await fetch(`${baseUrl}discover/movie?api_key=${key}&language=en-US&include_adult=false&with_genres=${genre}&vote_average.gte=${rating}&release_date.gte=${afterYear}&release_date.lte=${beforeYear}`);
             let json = await response.json();
-			console.log(`${baseUrl}discover/movie?api_key=fake_key&with_genres=${genre}&vote_average.gte=${rating}`)
+			console.log(`${baseUrl}discover/movie?api_key=fake-key&language=en-US&with_genres=${genre}&vote_average.gte=${rating}&release_date.gte=${afterYear}&release_date.lte=${beforeYear}`);
             console.log(json);
         } catch (err) {
-            console.log(err)
-        }
+            console.log(err);
+        };
     };
 
     const handleSearch = (e: any) => {
         e.preventDefault();
         handleFilmFetch();
 		setRating(0);
-		setActor('');
 		setAfterYear('');
 		setBeforeYear('');
     };
@@ -97,11 +95,6 @@ export const FilmForm = () => {
             <Form.Label>Before year</Form.Label>
 				<Form.Control onChange={(e: any) => setBeforeYear(e.target.value)} value={beforeYear}type="number" placeholder="2018 (example)" min={1899} max={2022} />
 				<Form.Text className="text-muted" />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Includes actor:</Form.Label>
-            <Form.Control value={actor} onChange={(e:any) => setActor(e.target.value.toLowerCase())} type="email" placeholder="Christan Bale (example)" />
-            <Form.Text className="text-muted" />
         </Form.Group>
         <button className="form-button" onClick={handleSearch} >Search</button>
         </Form>
