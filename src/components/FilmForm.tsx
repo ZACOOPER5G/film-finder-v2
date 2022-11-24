@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import env from "ts-react-dotenv";
 
-export const FilmForm = () => {
+export const FilmForm = (props: any) => {
 	const [genres, setGenres] = useState([]);
 	
 	// selected options
@@ -16,7 +16,13 @@ export const FilmForm = () => {
 
 	// populates genre dropdown on render
 	const getGenres = async () => {
-		const genreRequestEndpoint = '/genre/movie/list';
+		let movieOrShow;
+		if (props.movie) {
+			movieOrShow = "movie";
+		} else if (props.show) {
+			movieOrShow = "tv"
+		}
+		const genreRequestEndpoint = `/genre/${movieOrShow}/list`;
 		const requestParams = `?api_key=${key}`;
 		const urlToFetch = `${baseUrl}${genreRequestEndpoint}${requestParams}`;
 
@@ -33,14 +39,28 @@ export const FilmForm = () => {
 
 	useEffect(() => {
 		getGenres();
-	}, []);
+	}, [props.movie, props.show]);
 
 	// function to fetch film after submitting form
     const handleFilmFetch = async () => {
+		// checks whether movie or show form is selected
+		let currentSelection;
+		let beforeYearSelection;
+		let afterYearSelection;
+		if (props.movie) {
+			currentSelection = "movie";
+			beforeYearSelection = "release_date.lte";
+			afterYearSelection = "release_date.gte";
+		} else if (props.show) {
+			currentSelection = "tv";
+			beforeYearSelection = "first_air_date.lte";
+			afterYearSelection = "first_air_date.gte";
+		};
+
         try {
-            let response = await fetch(`${baseUrl}discover/movie?api_key=${key}&language=en-US&include_adult=false&with_genres=${genre}&vote_average.gte=${rating}&release_date.gte=${afterYear}&release_date.lte=${beforeYear}`);
+            let response = await fetch(`${baseUrl}discover/${currentSelection}?api_key=${key}&language=en-US&include_adult=false&with_genres=${genre}&vote_average.gte=${rating}&${afterYearSelection}=${afterYear}&${beforeYearSelection}=${beforeYear}`);
             let json = await response.json();
-			console.log(`${baseUrl}discover/movie?api_key=fake-key&language=en-US&with_genres=${genre}&vote_average.gte=${rating}&release_date.gte=${afterYear}&release_date.lte=${beforeYear}`);
+			console.log(`${baseUrl}discover/${currentSelection}?api_key=fake-key&language=en-US&with_genres=${genre}&vote_average.gte=${rating}&release_date.gte=${afterYear}&release_date.lte=${beforeYear}`);
             console.log(json);
         } catch (err) {
             console.log(err);
@@ -55,8 +75,16 @@ export const FilmForm = () => {
 		setBeforeYear('');
     };
 
+	let formSelection;
+	if (props.movie) {
+		formSelection = "movie"
+	} else if (props.show) {
+		formSelection = "show"
+	};
+
     return (
         <Form className="m-4 p-4">
+			<h3>Choose a <em className={formSelection === "movie" ? "movie" : "show"} >{formSelection}</em></h3>
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label>Choose a genre</Form.Label>
             <Form.Select required onChange={(e: any) => {
