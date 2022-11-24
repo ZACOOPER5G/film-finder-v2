@@ -5,12 +5,14 @@ import env from "ts-react-dotenv";
 export const FilmForm = (props: any) => {
 	const [genres, setGenres] = useState([]);
 	
-	// selected options
+	// user selected options
 	const [genre, setGenre] = useState('');
 	const [rating, setRating] = useState(0);
 	const [afterYear, setAfterYear] = useState('');
 	const [beforeYear, setBeforeYear] = useState('');
+	const [randomFilm, setRandomFilm] = useState({});
 
+	// api variables
     const baseUrl = 'https://api.themoviedb.org/3/';
     const key = env.REACT_APP_KEY;
 
@@ -21,7 +23,7 @@ export const FilmForm = (props: any) => {
 			movieOrShow = "movie";
 		} else if (props.show) {
 			movieOrShow = "tv"
-		}
+		};
 		const genreRequestEndpoint = `/genre/${movieOrShow}/list`;
 		const requestParams = `?api_key=${key}`;
 		const urlToFetch = `${baseUrl}${genreRequestEndpoint}${requestParams}`;
@@ -57,11 +59,18 @@ export const FilmForm = (props: any) => {
 			afterYearSelection = "first_air_date.gte";
 		};
 
+		// picks random page
+		let ranPage = Math.floor(Math.random() * 50);
+
         try {
-            let response = await fetch(`${baseUrl}discover/${currentSelection}?api_key=${key}&language=en-US&include_adult=false&with_genres=${genre}&vote_average.gte=${rating}&${afterYearSelection}=${afterYear}&${beforeYearSelection}=${beforeYear}`);
+            let response = await fetch(`${baseUrl}discover/${currentSelection}?api_key=${key}&language=en-US&include_adult=false&with_genres=${genre}&vote_average.gte=${rating}&${afterYearSelection}=${afterYear}&${beforeYearSelection}=${beforeYear}&page=${ranPage}`);
             let json = await response.json();
 			console.log(`${baseUrl}discover/${currentSelection}?api_key=fake-key&language=en-US&with_genres=${genre}&vote_average.gte=${rating}&release_date.gte=${afterYear}&release_date.lte=${beforeYear}`);
             console.log(json);
+			// get random film and set it as chosen film
+			let ranNum = Math.floor(Math.random() * 20).toString();
+			let ranFilm = json.results[ranNum];
+		setRandomFilm(ranFilm);
         } catch (err) {
             console.log(err);
         };
@@ -75,6 +84,7 @@ export const FilmForm = (props: any) => {
 		setBeforeYear('');
     };
 
+	// conditional to help style based on movie or show selection
 	let formSelection;
 	if (props.movie) {
 		formSelection = "movie"
