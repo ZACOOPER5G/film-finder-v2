@@ -67,9 +67,15 @@ export const FilmForm = (props: any) => {
 			console.log(`${baseUrl}discover/${currentSelection}?api_key=fake-key&language=en-US&with_genres=${genre}&vote_average.gte=${rating}&release_date.gte=${afterYear}&release_date.lte=${beforeYear}`);
             console.log(json);
 			// get random film and set it as chosen film
-			let ranNum = Math.floor(Math.random() * 20).toString();
-			let ranFilm = json.results[ranNum];
-		props.setChosenFilm(ranFilm);
+			const randomFilm = () => {
+				let ranNum = Math.floor(Math.random() * 20).toString();
+				let ranFilm = json.results[ranNum];
+				if (ranFilm.vote_count > 20) {
+					return ranFilm
+				} else handleFilmFetch()
+			}
+			let ranFilm = randomFilm();
+			props.setChosenFilm(ranFilm);
         } catch (err) {
             console.log(err);
         };
@@ -81,6 +87,8 @@ export const FilmForm = (props: any) => {
 		setRating(0);
 		setAfterYear('');
 		setBeforeYear('');
+		props.setMovie(false);
+		props.setShow(false);
     };
 
 	// conditional to help style based on movie or show selection
@@ -92,48 +100,49 @@ export const FilmForm = (props: any) => {
 	};
 
     return (
-        <Form className="m-4 p-4">
-			<h3>Choose a <em className={formSelection === "movie" ? "movie" : "show"} >{formSelection}</em></h3>
-        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>Choose a genre</Form.Label>
-            <Form.Select required onChange={(e: any) => {
-					let currGenre = e.target.value;
-					let formattedGenre = currGenre.split(' ').join('')
-					setGenre(formattedGenre.toLowerCase())}
-				} >
-				{ genres.map((genre) => (
-					// @ts-ignore
-					<option key={genre.id} value={genre.id} >{genre.name}</option>
-				)) }
-			</Form.Select>
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-            <Form.Label>Minimum rating</Form.Label>
-            <Form.Select onChange={(e: any) => setRating(e.target.value)} >
-				<option disabled selected> -- select an option -- </option>
-				<option value="10" >10</option>
-				<option value="9" >9</option>
-				<option value="8" >8</option>
-				<option value="7" >7</option>
-				<option value="6" >6</option>
-				<option value="5" >5</option>
-				<option value="4" >4</option>
-				<option value="3" >3</option>
-				<option value="2" >2</option>
-				<option value="1" >1</option>
-			</Form.Select>
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-            <Form.Label>After year</Form.Label>
-				<Form.Control onChange={(e: any) => setAfterYear(e.target.value)} value={afterYear} type="number" placeholder="2011 (example)" min={1899} max={2022} />
-				<Form.Text className="text-muted" />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-            <Form.Label>Before year</Form.Label>
-				<Form.Control onChange={(e: any) => setBeforeYear(e.target.value)} value={beforeYear}type="number" placeholder="2018 (example)" min={1899} max={2022} />
-				<Form.Text className="text-muted" />
-        </Form.Group>
-        <button className="form-button" onClick={handleSearch} >Search</button>
-        </Form>
+		<div className="film-form">
+			<Form className="m-4 p-4">
+				<h3>Choose a <em className={formSelection === "movie" ? "movie" : "show"} >{formSelection}</em></h3>
+			<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+				<Form.Label>Choose a genre</Form.Label>
+				<Form.Select required onChange={(e: any) => {
+						let currGenre = e.target.value;
+						let formattedGenre = currGenre.split(' ').join('')
+						setGenre(formattedGenre.toLowerCase())}
+					} >
+					{ genres.map((genre) => (
+						// @ts-ignore
+						<option key={genre.id} value={genre.id} >{genre.name}</option>
+					)) }
+				</Form.Select>
+			</Form.Group>
+			<Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+				<Form.Label>Minimum rating</Form.Label>
+				<Form.Select onChange={(e: any) => setRating(e.target.value)} >
+					<option disabled selected> -- select an option -- </option>
+					<option value="9" >9</option>
+					<option value="8" >8</option>
+					<option value="7" >7</option>
+					<option value="6" >6</option>
+					<option value="5" >5</option>
+					<option value="4" >4</option>
+					<option value="3" >3</option>
+					<option value="2" >2</option>
+					<option value="1" >1</option>
+				</Form.Select>
+			</Form.Group>
+			<Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+				<Form.Label>After year</Form.Label>
+					<Form.Control onChange={(e: any) => setAfterYear(e.target.value)} value={afterYear} type="number" placeholder="2011 (example)" min={1899} max={2022} />
+					<Form.Text className="text-muted" />
+			</Form.Group>
+			<Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+				<Form.Label>Before year</Form.Label>
+					<Form.Control onChange={(e: any) => setBeforeYear(e.target.value)} value={beforeYear}type="number" placeholder="2018 (example)" min={1899} max={2022} />
+					<Form.Text className="text-muted" />
+			</Form.Group>
+			<button className="form-button" onClick={handleSearch} >Search</button>
+			</Form>
+		</div>
     )
 };
