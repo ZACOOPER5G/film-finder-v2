@@ -13,7 +13,7 @@ export const FilmPoster = ({ chosenFilm }: any) => {
             <div className="film-poster">
                 <CardMedia
                     component="img"
-                    height="740"
+                    height="1040"
                     image={filmPoster}
                     alt="film poster"
                 />
@@ -25,7 +25,7 @@ export const FilmPoster = ({ chosenFilm }: any) => {
                     <p className="film-info">Release: {chosenFilm.release_date}</p>
                 </CardContent>
                 <CardActions className="card-content">
-                    <button className="film-button" ><a  target="_blank" href={`https://www.google.com/search?q=${filmInfoSearcher(chosenFilm.original_title || chosenFilm.name)}`}>{chosenFilm.original_title ? "Film information" : "Show information"}</a></button>
+                <a  target="_blank" href={`https://www.google.com/search?q=${filmInfoSearcher(chosenFilm.original_title || chosenFilm.name)}`}><button className="film-button" >{chosenFilm.original_title ? "Film information" : "Show information"}</button></a>
                 </CardActions>
             </div>
         </Card>

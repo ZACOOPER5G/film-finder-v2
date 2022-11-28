@@ -123,8 +123,16 @@ h2 {
 
 /* Film poster styles */
 
+.loading {
+  margin: 40px auto;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: baseline;
+}
+
 .film-poster-card {
-  margin: 20px auto;
+  margin: 40px auto;
 }
 
 .film-post {
@@ -148,7 +156,7 @@ h2 {
   width: 225px;
   border-radius: 5px;
   color: white;
-  background-color: #282c34;
+  background-color: #3A3E42;
   padding: 5px 10px;
   margin: 20px 0 !important;
   cursor: pointer;

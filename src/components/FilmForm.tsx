@@ -65,14 +65,19 @@ export const FilmForm = (props: any) => {
             let response = await fetch(`${baseUrl}discover/${currentSelection}?api_key=${key}&language=en-US&include_adult=false&with_genres=${genre}&vote_average.gte=${rating}&${afterYearSelection}=${afterYear}&${beforeYearSelection}=${beforeYear}&page=${ranPage}`);
             let json = await response.json();
 			console.log(`${baseUrl}discover/${currentSelection}?api_key=fake-key&language=en-US&with_genres=${genre}&vote_average.gte=${rating}&release_date.gte=${afterYear}&release_date.lte=${beforeYear}`);
+			props.setLoading(true);
             console.log(json);
 			// get random film and set it as chosen film
 			const randomFilm = () => {
 				let ranNum = Math.floor(Math.random() * 20).toString();
 				let ranFilm = json.results[ranNum];
 				if (ranFilm.vote_count > 20) {
+					props.setLoading(false);
 					return ranFilm
-				} else handleFilmFetch()
+				} else {
+					props.setLoading(true)
+					handleFilmFetch()
+				}
 			}
 			let ranFilm = randomFilm();
 			props.setChosenFilm(ranFilm);
@@ -83,12 +88,14 @@ export const FilmForm = (props: any) => {
 
     const handleSearch = (e: any) => {
         e.preventDefault();
+		props.setMovie(false);
+		props.setShow(false);
+		props.setChosenFilm(null);
+		props.setLoading(true);
         handleFilmFetch();
 		setRating(0);
 		setAfterYear('');
 		setBeforeYear('');
-		props.setMovie(false);
-		props.setShow(false);
     };
 
 	// conditional to help style based on movie or show selection
@@ -120,7 +127,6 @@ export const FilmForm = (props: any) => {
 				<Form.Label>Minimum rating</Form.Label>
 				<Form.Select onChange={(e: any) => setRating(e.target.value)} >
 					<option disabled selected> -- select an option -- </option>
-					<option value="9" >9</option>
 					<option value="8" >8</option>
 					<option value="7" >7</option>
 					<option value="6" >6</option>

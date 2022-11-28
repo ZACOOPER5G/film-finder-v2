@@ -28,9 +28,9 @@ function App() {
             <div className="loading" >
               {/* @ts-ignore */}
               <h2>Loading selection</h2>
-              <Spinner animation="grow" variant="light" />
-              <Spinner animation="grow" variant="light"  />
-              <Spinner animation="grow" variant="light"  />
+              <Spinner animation="grow" variant="light" size="sm" />
+              <Spinner animation="grow" variant="light" size="sm" />
+              <Spinner animation="grow" variant="light" size="sm" />
             </div>
           )
 
