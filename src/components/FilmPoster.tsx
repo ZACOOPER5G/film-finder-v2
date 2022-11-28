@@ -25,7 +25,7 @@ export const FilmPoster = ({ chosenFilm }: any) => {
                     <p className="film-info">Release: {chosenFilm.release_date}</p>
                 </CardContent>
                 <CardActions className="card-content">
-                    <button className="film-button" ><a  target="_blank" href={`https://www.google.com/search?q=${filmInfoSearcher(chosenFilm.title)}`}>Film information</a></button>
+                    <button className="film-button" ><a  target="_blank" href={`https://www.google.com/search?q=${filmInfoSearcher(chosenFilm.original_title || chosenFilm.name)}`}>{chosenFilm.original_title ? "Film information" : "Show information"}</a></button>
                 </CardActions>
             </div>
         </Card>
