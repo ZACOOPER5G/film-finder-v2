@@ -3,6 +3,11 @@ import { Card, CardContent, CardActions, CardMedia, Button, Typography } from "@
 export const FilmPoster = ({ chosenFilm }: any) => {
     const filmPoster = `https://image.tmdb.org/t/p/original/${chosenFilm.poster_path}`;
 
+    const filmInfoSearcher = (film: string) => {
+        const filmConvert = film.split(' ').join('+')
+        return filmConvert;
+    };
+
     return (
         <Card className="film-poster-card" sx={{ maxWidth: 500 }}>
             <div className="film-poster">
@@ -20,7 +25,7 @@ export const FilmPoster = ({ chosenFilm }: any) => {
                     <p className="film-info">Release: {chosenFilm.release_date}</p>
                 </CardContent>
                 <CardActions className="card-content">
-                    <button className="film-button" ><a  target="_blank" href={`https://www.google.com/search?q=google+search`}>Film information</a></button>
+                    <button className="film-button" ><a  target="_blank" href={`https://www.google.com/search?q=${filmInfoSearcher(chosenFilm.title)}`}>Film information</a></button>
                 </CardActions>
             </div>
         </Card>
