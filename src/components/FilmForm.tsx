@@ -102,7 +102,7 @@ export const FilmForm = (props: any) => {
     return (
 		<div className="film-form">
 			<Form className="m-4 p-4">
-				<h3>Choose a <em className={formSelection === "movie" ? "movie" : "show"} >{formSelection}</em></h3>
+				<h3 className="film-title" >Choose a <em className={formSelection === "movie" ? "movie" : "show"} >{formSelection}</em></h3>
 			<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
 				<Form.Label>Choose a genre</Form.Label>
 				<Form.Select required onChange={(e: any) => {

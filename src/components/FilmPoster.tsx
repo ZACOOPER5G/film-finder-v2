@@ -1,7 +1,28 @@
-import React from 'react'
+import { Card, CardContent, CardActions, CardMedia, Button, Typography } from "@mui/material";
 
-export const FilmPoster = () => {
-  return (
-    <div>FilmPoster</div>
-  )
+export const FilmPoster = ({ chosenFilm }: any) => {
+    const filmPoster = `https://image.tmdb.org/t/p/original/${chosenFilm.poster_path}`;
+
+    return (
+        <Card className="film-poster-card" sx={{ maxWidth: 500 }}>
+            <div className="film-poster">
+                <CardMedia
+                    component="img"
+                    height="740"
+                    image={filmPoster}
+                    alt="film poster"
+                />
+                <CardContent className="card-content" >
+                    <h3>{chosenFilm.name || chosenFilm.original_title}</h3>
+                    <p className="film-bio" >{chosenFilm.overview}</p>
+                    <p className="film-info">Rating: {chosenFilm.vote_average}</p>
+                    <p className="film-info">Original Language: {chosenFilm.original_language}</p>
+                    <p className="film-info">Release: {chosenFilm.release_date}</p>
+                </CardContent>
+                <CardActions className="card-content">
+                    <button className="film-button" ><a  target="_blank" href={`https://www.google.com/search?q=google+search`}>Film information</a></button>
+                </CardActions>
+            </div>
+        </Card>
+    )
 }
